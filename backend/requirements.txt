@@ -1,0 +1,4 @@
+flask
+flask_sqlalchemy
+flask_security_too
+flask_restful
