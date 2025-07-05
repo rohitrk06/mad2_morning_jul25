@@ -3,6 +3,8 @@ from flask_security import Security
 
 from flask_restful import Api
 
+from flask_cors import CORS
+
 from controllers.database import db
 from controllers.config import Config
 from controllers.user_datastore import user_datastore
@@ -35,7 +37,10 @@ def create_app():
 
 
 app, api = create_app()
-
+CORS(app, origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ])
 # @app.route('/')
 # def index():
 #     return {
