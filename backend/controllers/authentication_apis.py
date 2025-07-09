@@ -5,6 +5,30 @@ from flask_security import utils, auth_token_required , roles_required
 from controllers.user_datastore import user_datastore
 from controllers.database import db
 
+class CheckEmailAPI(Resource):
+    def post(self):
+        crediential = request.get_json()
+
+        if not crediential:
+            result = {
+                'message': 'Request body is required.'
+            }
+            return make_response(jsonify(result), 400)
+        
+        email = crediential.get('email', None)
+
+        if not email:
+            result = {
+                'message': 'Email is required.'
+            }
+            return make_response(jsonify(result), 400)
+        
+        user = user_datastore.find_user(email=email)
+        if user:
+            return make_response(jsonify({'available': False}), 200)
+        else:
+            return make_response(jsonify({'available': True}), 200)
+
 
 class LoginAPI(Resource):
     def post(self):

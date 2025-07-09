@@ -63,10 +63,11 @@ CORS(app, origins=[
     
 # api.add_resource(Index, '/')
 
-from controllers.authentication_apis import LoginAPI, LogoutAPI, RegisterAPI
+from controllers.authentication_apis import LoginAPI, LogoutAPI, RegisterAPI, CheckEmailAPI
 api.add_resource(LoginAPI, '/login')
 api.add_resource(LogoutAPI, '/logout')
 api.add_resource(RegisterAPI, '/register')
+api.add_resource(CheckEmailAPI, '/check-email')
 
 from controllers.crud_apis import CategoryCrudAPI
 api.add_resource(CategoryCrudAPI, '/categories', '/categories/<int:category_id>')

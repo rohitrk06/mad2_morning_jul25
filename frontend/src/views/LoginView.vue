@@ -1,5 +1,10 @@
 <script setup>
 import {ref} from 'vue';
+import { useMessageStore } from '@/stores/counter.js';
+import { useAuthStore } from '@/stores/auth.js';
+
+const message_store = useMessageStore();
+const auth_store = useAuthStore();
 
 const email = ref('');
 const password = ref('');
@@ -23,9 +28,13 @@ async function login(){
     }
     else {
         const data = await response.json()
-        alert(data.message);
-
-        localStorage.setItem('token', data.user_details.auth_token);
+        // alert(data.message);
+        message_store.updateErrorMessages(data.message);
+        const user = {
+            email: data.user_details.email,
+            roles: data.user_details.roles,
+        }
+        auth_store.setUserCred(data.user_details.auth_token, user)
 
         console.log(localStorage.getItem('token'))
     }
